@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تحميل النتائج</title>
+</head>
+<body>
+    <h2>🔐 حماية تحميل النتائج</h2>
+    {% if error %}
+        <p style="color: red;">كلمة المرور غير صحيحة</p>
+    {% endif %}
+    <form method="POST">
+        <label>أدخل كلمة المرور:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">تحميل الملف</button>
+    </form>
+</body>
+</html>

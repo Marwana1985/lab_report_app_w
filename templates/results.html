@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إدخال نتائج التحاليل</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 40px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .test-row {
+            margin-bottom: 10px;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>🧪 إدخال نتائج التحاليل</h2>
+    <form method="POST" action="{{ url_for('generate') }}">
+        <input type="hidden" name="name" value="{{ patient.name }}">
+        <input type="hidden" name="age" value="{{ patient.age }}">
+        <input type="hidden" name="phone" value="{{ patient.phone }}">
+        <input type="hidden" name="date" value="{{ patient.date }}">
+
+        <p><strong>الاسم:</strong> {{ patient.name }} | <strong>العمر:</strong> {{ patient.age }} | <strong>الهاتف:</strong> {{ patient.phone }} | <strong>التاريخ:</strong> {{ patient.date }}</p>
+
+        {% for test in selected_tests %}
+            <div class="test-row">
+                <label>{{ test }}:</label>
+                <input type="text" name="{{ test }}" required>
+                <small>({{ tests[test] }})</small>
+            </div>
+        {% endfor %}
+
+        <button class="submit-btn" type="submit">📄 توليد التقرير</button>
+    </form>
+	<a href="/download">📥 تحميل ملف النتائج (Excel)</a>
+
+</body>
+</html>

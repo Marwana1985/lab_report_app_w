@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة نتيجة تحليل</title>
+</head>
+<body>
+    <h2>إضافة نتيجة تحليل</h2>
+    <form method="POST" action="/add-result">
+        <label>اسم المريض:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>اسم التحليل:</label><br>
+        <input type="text" name="test" required><br><br>
+
+        <label>النتيجة:</label><br>
+        <input type="text" name="result" required><br><br>
+
+        <button type="submit">إضافة</button>
+    </form>
+
+    <br><br>
+    <a href="/download">تحميل ملف النتائج (Excel)</a>
+</body>
+</html>
