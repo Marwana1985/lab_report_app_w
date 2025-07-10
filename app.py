@@ -81,7 +81,7 @@ class LabPDF(FPDF):
         self.ln(5)
         self.set_font("Amiri", size=11)
         self.multi_cell(0, 40, text=reshape(
-            f"الاسم: {self.patient['name']}   العمر: {self.patient['age']}   الهاتف: {self.patient['phone']}   التاريخ: {self.patient['date']}"
+            f"الاسم: {self.patient['name']}   العمر: {self.patient['age']}   الهاتف: {self.patient['phone']}  اسم الطبيب: {self.patient['dr']} التاريخ: {self.patient['date']}"
         )) 
         self.ln(5)
        
@@ -170,6 +170,7 @@ def index():
             'name': request.form['name'],
             'age': request.form['age'],
             'phone': request.form['phone'],
+            'dr': request.form['dr'],
             'date': datetime.now().strftime('%Y-%m-%d')
         }
         selected_tests = request.form.getlist('tests')
@@ -182,9 +183,10 @@ def generate():
         'name': request.form['name'],
         'age': request.form['age'],
         'phone': request.form['phone'],
+        'dr': request.form['dr'],
         'date': request.form['date']
     }
-    results = {key: request.form[key] for key in request.form if key not in ['name', 'age', 'phone', 'date']}
+    results = {key: request.form[key] for key in request.form if key not in ['name', 'age', 'phone', 'dr', 'date']}
     record = {**patient, **results}
     data.append(record)
     df = pd.DataFrame(data)
@@ -210,9 +212,10 @@ def print_report():
         'name': request.form['name'],
         'age': request.form['age'],
         'phone': request.form['phone'],
+        'dr': request.form['dr'],
         'date': request.form['date']
     }
-    results = {key: request.form[key] for key in request.form if key not in ['name', 'age', 'phone', 'date']}
+    results = {key: request.form[key] for key in request.form if key not in ['name', 'age', 'phone','dr', 'date']}
     pdf_buffer = generate_pdf(patient, results)
     filename = secure_filename(f"{patient['name']}_report.pdf")
     return send_file(pdf_buffer, as_attachment=True, download_name=filename, mimetype='application/pdf')
