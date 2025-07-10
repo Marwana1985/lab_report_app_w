@@ -81,7 +81,7 @@ class LabPDF(FPDF):
         self.ln(5)
         self.set_font("Amiri", size=11)
         self.multi_cell(0, 40, text=reshape(
-            f"الاسم: {self.patient['name']}   العمر: {self.patient['age']}   الهاتف: {self.patient['phone']}  اسم الطبيب: {self.patient['dr']} التاريخ: {self.patient['date']}"
+            f"الاسم: {self.patient['name ']}     العمر: {self.patient['age ']}    الهاتف: {self.patient[' phone ']}    اسم الطبيب:  {self.patient[' dr ']}    التاريخ: {self.patient[' date ']}"
         )) 
         self.ln(5)
        
@@ -167,11 +167,11 @@ def generate_pdf(patient, results):
 def index():
     if request.method == 'POST':
         patient = {
-            'name': request.form['name'],
-            'age': request.form['age'],
-            'phone': request.form['phone'],
-            'dr': request.form['dr'],
-            'date': datetime.now().strftime('%Y-%m-%d')
+            ' name ': request.form[' name '],
+            ' age ': request.form[' age '],
+            ' phone ': request.form[' phone '],
+            ' dr ': request.form['dr'],
+            ' date ': datetime.now().strftime('%Y-%m-%d')
         }
         selected_tests = request.form.getlist('tests')
         return render_template('results.html', patient=patient, selected_tests=selected_tests, tests=tests)
@@ -180,13 +180,13 @@ def index():
 @app.route('/generate', methods=['POST'])
 def generate():
     patient = {
-        'name': request.form['name'],
-        'age': request.form['age'],
-        'phone': request.form['phone'],
-        'dr': request.form['dr'],
-        'date': request.form['date']
+        ' name ': request.form[' name '],
+        ' age ': request.form[' age '],
+        ' phone ': request.form[' phone '],
+        ' dr ': request.form[' dr '],
+        ' date ': request.form[' date ']
     }
-    results = {key: request.form[key] for key in request.form if key not in ['name', 'age', 'phone', 'dr', 'date']}
+    results = {key: request.form[key] for key in request.form if key not in [' name ', ' age ', ' phone ', ' dr ', ' date ']}
     record = {**patient, **results}
     data.append(record)
     df = pd.DataFrame(data)
@@ -209,13 +209,13 @@ def search():
 @app.route('/print_report', methods=['POST'])
 def print_report():
     patient = {
-        'name': request.form['name'],
-        'age': request.form['age'],
-        'phone': request.form['phone'],
-        'dr': request.form['dr'],
-        'date': request.form['date']
+        ' name ': request.form[' name '],
+        ' age ': request.form[' age '],
+        ' phone ': request.form[' phone '],
+        ' dr ': request.form[' dr '],
+        ' date ': request.form[' date ']
     }
-    results = {key: request.form[key] for key in request.form if key not in ['name', 'age', 'phone','dr', 'date']}
+    results = {key: request.form[key] for key in request.form if key not in [' name ', ' age ', ' phone ',' dr ', ' date ']}
     pdf_buffer = generate_pdf(patient, results)
     filename = secure_filename(f"{patient['name']}_report.pdf")
     return send_file(pdf_buffer, as_attachment=True, download_name=filename, mimetype='application/pdf')
